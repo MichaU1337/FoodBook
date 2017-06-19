@@ -89,9 +89,9 @@ public class RecipeModifyGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         pictureLabel = new javax.swing.JLabel();
-        nameTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionTextArea = new javax.swing.JTextArea();
+        nameTextField = new javax.swing.JTextField();
         fastCheckBox = new javax.swing.JCheckBox();
         cheapCheckBox = new javax.swing.JCheckBox();
         goodCheckBox = new javax.swing.JCheckBox();
@@ -124,21 +124,39 @@ public class RecipeModifyGUI extends javax.swing.JFrame {
         setUndecorated(true);
 
         pictureLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foodbook/Resources/1.jpg"))); // NOI18N
-
-        nameTextField.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        nameTextField.setText("Podaj nazwe przepisu...");
-        nameTextField.setName(""); // NOI18N
-        nameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameTextFieldActionPerformed(evt);
-            }
-        });
+        pictureLabel.setFocusCycleRoot(true);
 
         descriptionTextArea.setColumns(20);
         descriptionTextArea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         descriptionTextArea.setRows(5);
         descriptionTextArea.setText("...i opcjonalny opis");
+        descriptionTextArea.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                descriptionTextAreaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                descriptionTextAreaFocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(descriptionTextArea);
+
+        nameTextField.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        nameTextField.setText("Podaj nazwe przepisu...");
+        nameTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        nameTextField.setName(""); // NOI18N
+        nameTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                nameTextFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                nameTextFieldFocusLost(evt);
+            }
+        });
+        nameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameTextFieldActionPerformed(evt);
+            }
+        });
 
         fastCheckBox.setText("szybkie");
 
@@ -159,6 +177,7 @@ public class RecipeModifyGUI extends javax.swing.JFrame {
         ingredientListLabel.setText("Lista skladnikow:");
         ingredientListLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        pickIngrComboBox.setMaximumRowCount(16);
         pickIngrComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Wybierz składnik" }));
         pickIngrComboBox.setAlignmentX(11.0F);
 
@@ -589,6 +608,74 @@ public class RecipeModifyGUI extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_saveRecipeActionPerformed
+
+    private void nameTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTextFieldFocusGained
+        // For some reason Netbeans unables to create normal if statement 
+        // NOT WORKING :o
+        // Only in FocusGained/FocusLost functions.
+        
+//        if(nameTextField.getText() == "Podaj nazwe przepisu..."){
+//            nameTextField.setText("");
+//        }
+//        **********************************************************
+        
+        // Working alternative
+        String s = nameTextField.getText();                
+        switch(s){
+            case("Podaj nazwe przepisu..."):{
+                nameTextField.setText("");
+                break;
+            }
+            default:{
+                break;
+            }
+        }
+    }//GEN-LAST:event_nameTextFieldFocusGained
+
+    private void nameTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTextFieldFocusLost
+        String s = nameTextField.getText();              
+        switch(s){
+            case(""):{
+                nameTextField.setText("Podaj nazwe przepisu...");
+                break;
+            }
+            default:{
+                break;
+            }
+        }
+       
+    }//GEN-LAST:event_nameTextFieldFocusLost
+
+    private void descriptionTextAreaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descriptionTextAreaFocusGained
+        String d = descriptionTextArea.getText();
+        switch(d){
+            case("...i opcjonalny opis"):{
+                descriptionTextArea.setText("");
+                break;
+            }
+            default:{
+                break;
+            }
+        }
+    }//GEN-LAST:event_descriptionTextAreaFocusGained
+
+    private void descriptionTextAreaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descriptionTextAreaFocusLost
+        String d = descriptionTextArea.getText();
+        switch(d){
+            case(""):{
+                descriptionTextArea.setText("...i opcjonalny opis");
+                break;
+            }
+            default:{
+                break;
+            }
+        }
+        
+       
+        
+        
+        
+    }//GEN-LAST:event_descriptionTextAreaFocusLost
 
     
 

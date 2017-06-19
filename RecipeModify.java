@@ -6,27 +6,32 @@ import javax.swing.JComboBox;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
-
 /*
-    *
-    *
-    Default constructor = Add Recipe window with all fields blank. 
-    Constructor (SingleRecipe) = Show recipe window with fields filled.
-    *
-    */
+Default Constructor() = Add Recipe window with all fields blank. 
+Constructor(SingleRecipe) = Show recipe window with fields filled.
+*/
 public class RecipeModify {
 
     private List<String> ingredientList = new ArrayList<>();
     private RecipeModifyGUI modifyGUI;
-    //private RecipeModifyGUI modifyGUI = new RecipeModifyGUI();
-    String[] ingredients = {"groch", "kapusta", "buraki", "ziemniaki", "czosnek"};
+
+    public List<String> getIngredientList() {
+        return ingredientList;
+    }
+
+    //String[] ingredients = {"groch", "kapusta", "buraki", "ziemniaki", "czosnek"};
     
     public RecipeModify() {       
-        RecipeModifyGUI modifyGUI = new RecipeModifyGUI();
+        modifyGUI = new RecipeModifyGUI();
         
-        for(String s : ingredients){
-            ingredientList.add(s);
+        for(SingleIngredient s : FoodBook.getIngredientList()){
+            ingredientList.add(s.getIngredientName());
         }
+        
+        
+//        for(String s : ingredients){
+//            ingredientList.add(s);
+//        }
         
         // ComboBox with a placeholder text that cant be picked from the dropdown list - super tryhard solution.
         PopupMenuListener popupmenulistener = new PopupMenuListener() {       
@@ -63,10 +68,14 @@ public class RecipeModify {
     }
 
     public RecipeModify(SingleRecipe recipe) {       
-        RecipeModifyGUI modifyGUI = new RecipeModifyGUI(recipe);   
-        
-        for(String s : ingredients){
-            ingredientList.add(s);
+        modifyGUI = new RecipeModifyGUI(recipe);   
+     
+//        for(String s : ingredients){
+//            ingredientList.add(s);
+//        }
+
+        for(SingleIngredient s : FoodBook.getIngredientList()){
+            ingredientList.add(s.getIngredientName());
         }
         
         // ComboBox with a placeholder text that cant be picked from the dropdown list - super tryhard solution.
@@ -106,4 +115,5 @@ public class RecipeModify {
     public RecipeModifyGUI getModifyGUI() {
         return modifyGUI;
     }
+
 }

@@ -8,7 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  * @author Michał Mierzwa
@@ -30,9 +29,13 @@ public class RecipeIO {
         }
                 
     }
+ 
+    public static void clearRecipeList(){
+        
+    }
     
     public static void saveRecipeList(List<SingleRecipe> list){
-        recipeList = list;
+        recipeList = list;        
     }
 
     public static List<SingleRecipe> getRecipeList() {
@@ -42,7 +45,6 @@ public class RecipeIO {
    public static void saveRecipe(SingleRecipe recipe){        
        if(recipe != null){
            recipeList.add(recipe);
-           //System.out.println("działa null");
        } 
         try
         {
@@ -57,7 +59,6 @@ public class RecipeIO {
         {
             i.printStackTrace();
         }
-    
     }
  
     void loadRecipe(){

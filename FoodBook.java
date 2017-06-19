@@ -1,10 +1,17 @@
 package foodbook;
 
+import foodbook.Helpers.GridButtonPanel;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.Border;
@@ -15,12 +22,18 @@ public class FoodBook extends JFrame {
     
     private GridButtonPanel gridButtonPanel = new GridButtonPanel();
     private List<JButton> buttonList = new ArrayList<>();
+    private static List<SingleIngredient> ingredientList;
     private static Rectangle rect = new Rectangle();
     private static RecipeIO recipeIO;
+
+    public static List<SingleIngredient> getIngredientList() {
+        return ingredientList;
+    }
 
     public static RecipeIO getRecipeIO() {
         return recipeIO;
     }
+    
     
     public FoodBook(String name) {
         super(name);
@@ -54,9 +67,9 @@ public class FoodBook extends JFrame {
                 System.exit(0);
             }
         });
-        // Buttons(row2)...
-        final JPanel frontButtons = gridButtonPanel.createGridPanel();
+        // Buttons(row2)...       
         
+        final JPanel frontButtons = gridButtonPanel.createGridPanel();
         // Combine above into pane.           
         pane.add(mainPanel, BorderLayout.NORTH);
         pane.add(frontButtons, BorderLayout.CENTER);
@@ -66,10 +79,40 @@ public class FoodBook extends JFrame {
     public static Rectangle getRectangle(){
         return rect;
     }
-
-    public static void main(String[] args) {
+    
+    public static List<SingleIngredient> loadIngredientsFromFile() throws IOException{
+        ingredientList = new ArrayList<>();
+        ingredientList.clear();
         
-        RecipeIO recipeIO = new RecipeIO();     
+        Charset charset = Charset.forName("UTF-8");
+        String path = "C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\Ingredients.txt";
+       
+        // Read from file ingredients...
+        List<String> lines = Files.readAllLines(Paths.get(path), charset);
+        
+        /*
+            SUPER IMPORTANT MESSAGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        
+            For the application to work u need to be sure that ingredients in Ingredients.txt are of format: 
+        
+            NAME_T_VALUE1_T_VALUE2_T_VALUE3_T_VALUE4_T_VALUE5              //where _T_ is tabulation
+        
+            Care for spaces or it will be ArrayOfBoundException!!!
+        */
+        for(int i=0; i<lines.size(); i++){
+            String[] parts = new String[4];
+            parts = lines.get(i).split("\t");
+            
+            SingleIngredient singleIngredient = new SingleIngredient(parts[0], parts[1], parts[2], parts[3], parts[4]);
+            ingredientList.add(singleIngredient);
+        }
+        
+        return ingredientList;
+    }
+
+    public static void main(String[] args) {     
+        
+        recipeIO = new RecipeIO();     
  
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -97,11 +140,11 @@ public class FoodBook extends JFrame {
                 frame.pack();
                 frame.setVisible(true);
                                 
-                //Set up the buttons.
+                //Set up the buttons.                        
                 JButton button1 = frame.gridButtonPanel.getGridButton(0, 0);
                 button1.setText("Śniadanie");
-                
-                frame.buttonList.add(button1);
+                button1.setBackground(Color.red);                
+                frame.buttonList.add(button1);                      
                                 
                 JButton button2 = frame.gridButtonPanel.getGridButton(0, 1);
                 button2.setText("Obiad");
@@ -145,17 +188,17 @@ public class FoodBook extends JFrame {
                 
                 // Add buttons background.
                 try {
-                  ImageIcon button1Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\1.jpg");
+                  ImageIcon button1Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\1blur.jpg");
                   button1.setIcon(button1Icon);
-                  ImageIcon button2Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\2.jpg");
+                  ImageIcon button2Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\2blur.jpg");
                   button2.setIcon(button2Icon);
-                  ImageIcon button3Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\3.jpg");
+                  ImageIcon button3Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\3blur.jpg");
                   button3.setIcon(button3Icon);
-                  ImageIcon button4Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\4.jpeg");
+                  ImageIcon button4Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\4blur.jpg");
                   button4.setIcon(button4Icon);
-                  ImageIcon button5Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\5.jpg");
+                  ImageIcon button5Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\5blur.jpg");
                   button5.setIcon(button5Icon);
-                  ImageIcon button6Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\6.jpg");
+                  ImageIcon button6Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\6blur.jpg");
                   button6.setIcon(button6Icon);
                 } catch (Exception ex) {
                   System.out.println(ex);
@@ -176,10 +219,59 @@ public class FoodBook extends JFrame {
                     if (model.isRollover()) {
                         b.setForeground(Color.RED);
                         b.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                        if(b == button1){
+                            ImageIcon button1Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\1.jpg");
+                            button1.setIcon(button1Icon);
+                        }
+                        if(b == button2){
+                            ImageIcon button2Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\2.jpg");
+                            button2.setIcon(button2Icon);
+                        }
+                        if(b == button3){
+                            ImageIcon button3Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\3.jpg");
+                            button3.setIcon(button3Icon);
+                        }
+                        if(b == button4){
+                            ImageIcon button4Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\4.jpeg");
+                            button4.setIcon(button4Icon);
+                        }
+                        if(b == button5){
+                            ImageIcon button5Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\5.jpg");
+                            button5.setIcon(button5Icon);
+                        }
+                        if(b == button6){
+                            ImageIcon button6Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\6.jpg");
+                            button6.setIcon(button6Icon);
+                        }
                     } else {
                         b.setForeground(Color.WHITE);
                         Border emptyBorder = BorderFactory.createEmptyBorder();
                         b.setBorder(emptyBorder);
+                        
+                        if(b == button1){
+                            ImageIcon button1Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\1blur.jpg");
+                            button1.setIcon(button1Icon);
+                        }
+                        if(b == button2){
+                            ImageIcon button2Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\2blur.jpg");
+                            button2.setIcon(button2Icon);
+                        }
+                        if(b == button3){
+                            ImageIcon button3Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\3blur.jpg");
+                            button3.setIcon(button3Icon);
+                        }
+                        if(b == button4){
+                            ImageIcon button4Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\4blur.jpg");
+                            button4.setIcon(button4Icon);
+                        }
+                        if(b == button5){
+                            ImageIcon button5Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\5blur.jpg");
+                            button5.setIcon(button5Icon);
+                        }
+                        if(b == button6){
+                            ImageIcon button6Icon = new ImageIcon("C:\\Users\\Dell\\Documents\\NetBeansProjects\\FoodBook\\src\\foodbook\\Resources\\6blur.jpg");
+                            button6.setIcon(button6Icon);
+                        }
                     }
                     
                 }   
@@ -189,12 +281,18 @@ public class FoodBook extends JFrame {
                 //Save rectangle of mainWindow for childerWindows.
                 rect = frame.getBounds();
                 
-                
-                
+                // Load ingredient list...
+                try {
+                    loadIngredientsFromFile();
+                } catch (IOException ex) {
+                    Logger.getLogger(FoodBook.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 }
             });      
         
         
         
     }
+
+    
 }

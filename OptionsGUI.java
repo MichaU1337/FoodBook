@@ -2,17 +2,20 @@ package foodbook;
 
 import java.awt.Component;
 import java.io.File;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
  * @author Michał Mierzwa
- * 
  */
 public class OptionsGUI extends javax.swing.JFrame {
 
+    private JDBC jdbc = new JDBC();
+    
     public OptionsGUI() {
         setUndecorated(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);              
@@ -30,6 +33,9 @@ public class OptionsGUI extends javax.swing.JFrame {
         
         disablePanels();
         
+        textFieldAddress.setPlaceholder("Podaj adres IP");
+        textFieldLogin.setPlaceholder("Podaj login");
+        textFieldHaslo.setPlaceholder("Podaj hasło");
         
         
     }
@@ -55,13 +61,14 @@ public class OptionsGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        textFieldAdres = new javax.swing.JTextField();
-        textFieldLogin = new javax.swing.JTextField();
-        textFieldHaslo = new javax.swing.JTextField();
-        buttonSaveConf = new javax.swing.JButton();
+        textFieldAddress = new foodbook.Helpers.CustomTextFieldWithIP();
+        textFieldLogin = new foodbook.Helpers.CustomTextField();
+        textFieldHaslo = new foodbook.Helpers.CustomTextField();
+        buttonSaveToDb = new javax.swing.JButton();
         labelTestConn = new javax.swing.JLabel();
         buttonTestConn = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        buttonLoadFromDb = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         labelIngreList = new javax.swing.JLabel();
         labelAvailIngr = new javax.swing.JLabel();
@@ -83,14 +90,14 @@ public class OptionsGUI extends javax.swing.JFrame {
         labelSaveData.setText("Sposób zapisu danych:");
         labelSaveData.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jRadioButton1.setText("Zapisz do pliku");
+        jRadioButton1.setText("Do pliku");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton1ActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setText("Zapisz do bazy danych:");
+        jRadioButton2.setText("Do bazy danych");
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton2ActionPerformed(evt);
@@ -181,8 +188,8 @@ public class OptionsGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(labelLoadBackup)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonLoadBackup)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addComponent(buttonLoadBackup, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -193,7 +200,7 @@ public class OptionsGUI extends javax.swing.JFrame {
         labelSaveToDatabase.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setText("Adres:");
+        jLabel1.setText("IP Address:");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Login:");
@@ -201,23 +208,34 @@ public class OptionsGUI extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Hasło:");
 
-        textFieldAdres.setText("Podaj adres bazy danych");
-
-        textFieldLogin.setText("Podaj login");
-
-        textFieldHaslo.setText("Podaj Haslo");
-
-        buttonSaveConf.setText("Save");
+        buttonSaveToDb.setText("Zapisz");
+        buttonSaveToDb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSaveToDbActionPerformed(evt);
+            }
+        });
 
         labelTestConn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         labelTestConn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTestConn.setText("Testuj połączenie z DB");
 
         buttonTestConn.setText("Test");
+        buttonTestConn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonTestConnActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Save DB configuration");
+        jLabel5.setText("Zapisz do bazy danych");
+
+        buttonLoadFromDb.setText("Wczytaj");
+        buttonLoadFromDb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLoadFromDbActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -230,17 +248,20 @@ public class OptionsGUI extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelTestConn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(textFieldAdres, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-                            .addComponent(textFieldLogin, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(textFieldHaslo, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelTestConn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
                             .addComponent(buttonTestConn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttonSaveConf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(textFieldLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(textFieldHaslo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(textFieldAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(buttonSaveToDb, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buttonLoadFromDb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -249,26 +270,31 @@ public class OptionsGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(labelSaveToDatabase, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldAdres))
-                .addGap(7, 7, 7)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldLogin))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(textFieldAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(textFieldLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldHaslo))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textFieldHaslo, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                 .addGap(8, 8, 8)
                 .addComponent(labelTestConn, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonTestConn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonSaveConf)
-                .addContainerGap())
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonSaveToDb)
+                    .addComponent(buttonLoadFromDb))
+                .addGap(16, 16, 16))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -282,6 +308,11 @@ public class OptionsGUI extends javax.swing.JFrame {
         labelAvailIngr.setText("Wszystkie dostępne składniki:");
 
         comboBoxIngredients.setMaximumRowCount(10);
+        comboBoxIngredients.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxIngredientsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -325,7 +356,7 @@ public class OptionsGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(345, Short.MAX_VALUE))))
+                        .addContainerGap(335, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -441,43 +472,38 @@ public class OptionsGUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OptionsGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OptionsGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OptionsGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OptionsGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void comboBoxIngredientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxIngredientsActionPerformed
+       
+    }//GEN-LAST:event_comboBoxIngredientsActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new OptionsGUI().setVisible(true);
-            }
-        });
-    }
+    private void buttonTestConnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTestConnActionPerformed
+        try {
+            jdbc.testConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(OptionsGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(OptionsGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonTestConnActionPerformed
+
+    private void buttonSaveToDbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveToDbActionPerformed
+        jdbc.saveToDatabase("localhost", "3306", "root", "komputer");
+        
+        
+    }//GEN-LAST:event_buttonSaveToDbActionPerformed
+
+    private void buttonLoadFromDbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoadFromDbActionPerformed
+        jdbc.loadFromDatabase("localhost", "3306", "root", "komputer");
+    }//GEN-LAST:event_buttonLoadFromDbActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCloseWindow;
     private javax.swing.JButton buttonCreateBackup;
     private javax.swing.JButton buttonLoadBackup;
-    private javax.swing.JButton buttonSaveConf;
+    private javax.swing.JButton buttonLoadFromDb;
+    private javax.swing.JButton buttonSaveToDb;
     private javax.swing.JButton buttonTestConn;
     private javax.swing.JComboBox<String> comboBoxIngredients;
     private javax.swing.JLabel jLabel1;
@@ -498,9 +524,9 @@ public class OptionsGUI extends javax.swing.JFrame {
     private javax.swing.JLabel labelSaveData;
     private javax.swing.JLabel labelSaveToDatabase;
     private javax.swing.JLabel labelTestConn;
-    private javax.swing.JTextField textFieldAdres;
-    private javax.swing.JTextField textFieldHaslo;
-    private javax.swing.JTextField textFieldLogin;
+    private foodbook.Helpers.CustomTextFieldWithIP textFieldAddress;
+    private foodbook.Helpers.CustomTextField textFieldHaslo;
+    private foodbook.Helpers.CustomTextField textFieldLogin;
     // End of variables declaration//GEN-END:variables
 
     private void disablePanels() {

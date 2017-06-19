@@ -1,0 +1,137 @@
+Salceson czarny	340	12,6	32	0,5
+Salceson włoski	322	14,6	29,3	0
+Sałata	20	1,4	0,3	2,9
+Sandacz świeży	80	18,3	0,3	0,9
+Sardynki w oleju, konserwa	202	24	11,5	0
+Sardynki w sosie pomidorowym, konserwa	163	17	9,9	1,4
+Sarnina	102	20,8	1,9	0,4
+Schab surowy wieprzowy	174	21	10	0
+Schab wędzony	136	25	4	0
+Seler korzeń	61	1,3	0,2	13,6
+Ser Feta	216	17	16	1
+Ser pleśniowy Brie pełnotłusty	293	18	24,5	0
+Ser pleśniowy Rokpol pełnotłusty	354	22,6	29,3	0
+Ser podpuszczkowy Brie pełnotłusty	332	19,8	28	0,2
+Ser podpuszczkowy Camembert tłusty	263	19,3	19,8	1,9
+Ser podpuszczkowy Cheddar pełnotłusty	382	27,1	29,3	2,5
+Ser podpuszczkowy Ementaler pełnotłusty	383	28,8	29,7	0,1
+Ser podpuszczkowy Ementaler tłusty	330	28,8	23,2	1,5
+Ser podpuszczkowy Gouda tłusty	314	27,9	22	1
+Ser podpuszczkowy Mozarella tłusty	224	20	16	0
+Ser podpuszczkowy Myśliwski pełnotłusty	349	25,5	27,4	0,1
+Ser podpuszczkowy Parmezan	408	35,1	29,7	0,1
+Ser podpuszczkowy Salami pełnotłusty	354	25,2	28,1	0,1
+Ser podpuszczkowy Salami tłusty	329	29,5	22,1	3,1
+Ser podpuszczkowy Tylżycki pełnotłusty	356	26,1	27,9	0,1
+Ser podpuszczkowy Tylżycki tłusty	327	27,8	23	2,1
+Ser topiony tłusty	222	18	16	1,6
+Ser twarogowy chudy	98	19,8	0,5	3,5
+Ser twarogowy półtłusty	132	18,7	4,7	3,7
+Ser twarogowy pełnotłusty	176	17,7	10,1	3,5
+Serca wieprzowe	111	16,9	4,8	0
+Serdelki drobiowe	239	13,9	19,5	1,9
+Serek Fromage naturalny	384	10,2	37,1	2,4
+Serek homogenizowany truskawkowy	167	15,3	3,9	17,7
+Serek homogenizowany waniliowy	158	16,8	4,2	13,3
+Serek twarogowy ziarnisty	101	12,3	4,3	3,3
+Sernik	273	10	9	38
+Sernik z rodzynkami, ciasto	342	14,6	13,9	39,6
+Serwatka płynna	25	0,8	0,1	5,1
+Sezamki	511	13,4	25,8	56,2
+Skrobia kukurydziana	367	0,3	0,1	91,3
+Skrzydło bez skóry indycze	169	16,5	11,4	0
+Słonecznik ziarno	580	22,5	49	12,3
+Słonina	811	2,4	89	0
+Smalec	896	0	99,5	0
+Snickers, baton	509	9,7	28,9	52,6
+Soczewica, suche ziarno	347	25	1	59,5
+Soja, suche ziarno	442	34,9	18,1	34,8
+Sola świeża	83	17,5	1,4	0
+Sok ananasowy	48	0,3	0,1	11,4
+Sok grejfrutowy	35	0,6	0,2	7,8
+Sok jabłkowy	45	0,4	0,4	10
+Sok marchwiowy	48	0,4	0,1	11,3
+Sok pomarańczowy	45	0,5	0,1	10,5
+Sok pomidorowy	19	0,8	0,6	2,6
+Sok z czarnej porzeczki	45	0,3	0,3	10,2
+Sprite, napój	42	0	0	10,5
+Syrop truskawkowy	262	0,2	0,1	62
+Szampan półsłodki	97	0,2	0	7
+Szampan półwytrawny	83	0,1	0	3,4
+Szampan słodki	117	0,2	0	12
+Szczaw	39	1,1	0,8	3,9
+Szczupak świeży	81	18,4	0,8	0
+Szczypiorek	39	4,1	0,8	3,9
+Szparagi	24	1,9	0,2	3,7
+Szpinak	26	2,6	0,4	3
+Szponder wołowy	218	19,3	15,7	0
+Szprot wędzony	243	19,3	18,3	0
+Szynka surowa wieprzowa	264	18	21,3	0
+Szynka wędzona gotowana	389	23	33	0
+Śmietana 18% tłuszczu	186	2,5	18	3,6
+Śmietanka do kawy 9% tłuszczu	54	2,8	9	4
+Śmietanka kremowa 30% tłuszczu	291	2,2	30	3,1
+Śledź solony	218	19,8	15,4	0
+Śledź świeży	162	16,3	10,7	0
+Śledź w oleju, konserwa	343	19,7	29,4	0
+Śledź w pomidorach, konserwa	177	13,7	12,8	1,8
+Śliwki	70	1	0,3	15,9
+Śliwki suszone	311	4,9	0,9	70,8
+Teatralny, wafel	546	8	31	58
+Tic Tac, drażetki	390	0	0	97,5
+Tłuszcz roślinny Planta	900	0	100	0
+Toffifee, czekoladka	535	6	31	58
+Tran	900	0	100	0
+Truskawki	36	0,7	0,5	7,2
+Tuńczyk świeży	97	22	1	0
+Tuńczyk w oleju, konserwa	189	27,1	9	0
+Twix, baton	487	5,3	23,2	64,2
+Udo bez skóry z kurczaka	125	17,8	6	0
+Udo ze skórą z kurczaka	161	17,8	10	0
+Udziec barani	234	18	18	0
+Udziec cielęcy	108	19,9	3,1	0
+Wafel Familijne	533	7,1	29,6	59,5
+Wafel Grześki	550	8,5	34,5	51,2
+Wafel Kinder Bueno	532	5,5	35,5	47,6
+Wafel Prince Polo	534	4,8	31,5	57,5
+Wafel Princessa	562	4,1	34,6	58,4
+Wafel Teatralny	546	8	31	58
+Wasa, pieczywo chrupkie pszenne	360	12	2,2	73
+Wątroba drobiowa	136	19,1	6,3	0,6
+Wątroba wieprzowa	129	19,7	4,8	1,7
+Wątroba wołowa	124	20	3,1	4
+Wermut, wino	104	0	0	7,9
+Węgorz świeży	281	12,7	25,6	0
+Węgorz wędzony	329	17,9	28,6	0
+Whisky	225	0	0	0
+Wieprzowina, boczek	517	10,1	53	0
+Wieprzowina, golonka ze skórą	297	18,6	24,7	0
+Wieprzowina, karkówka	270	16,1	22,8	0
+Wieprzowina, łopatka	259	16	21,7	0
+Wieprzowina, mięso bez kości, średnio	264	18	21,3	0
+Wieprzowina, mięso z kością, średnio	329	15,4	29,7	0
+Wieprzowina, schab surowy	174	21	10	0
+Wieprzowina, szynka surowa	264	18	21,3	0
+Wieprzowina, żeberka	324	15,2	29,3	0
+Wino białe półsłodkie	92	0	0	4,4
+Wino białe półwytrawne	78	0	0	3,7
+Wino białe wytrawne	73	0	0	2,4
+Wino czerwone półsłodkie	96	0	0	5,5
+Wino czerwone słodkie	106	0,1	0	8,2
+Wino czerwone wytrawne	75	0	0	3
+Winogrona	74	0,5	0,2	17,6
+Wiórki kokosowe	606	5,6	62	6,4
+Wiśnie	67	1,2	0,4	14,6
+Wołowina, mięso bez kości, średnio	116	20,9	3,6	0
+Wołowina, mięso z kością, średnio	149	18,6	8,3	0
+Wołowina, polędwica	112	20,1	3,5	0
+Wołowina, pieczeń	116	20,9	3,6	0
+Wołowina, rostbef	152	21,5	7,3	0
+Wołowina, rozbratel	158	16,7	10,1	0
+Wołowina, szponder	218	19,3	15,7	0
+Wódka, średnio	225	0	0	0
+Zarodki pszenne	377	27,5	9,4	45,5
+Ziemniaki	87	1,7	0,1	19,9
+Żeberka wieprzowe	324	15,2	29,3	0
+Żółtko jaja kurzego	355	16,3	31,9	0,7
+Żurawiny	51	0,4	0,1	12,2

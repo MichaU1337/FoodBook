@@ -5,11 +5,8 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import static javax.swing.SwingConstants.CENTER;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import sun.swing.table.DefaultTableCellHeaderRenderer;
@@ -42,7 +39,6 @@ public class AllRecipesGUI extends javax.swing.JFrame {
         // *******************************************
         // JTable Configuration to show all recipes...
         // *******************************************
-        
         // Set column names...
         String[] columns = new String[] {
             "Nazwa przepisu", "Opis", "Szybkie", "Tanie", "Dobre"
@@ -76,7 +72,7 @@ public class AllRecipesGUI extends javax.swing.JFrame {
             public boolean isCellEditable(int row, int column) {
                //all cells false
                return false;
-    }
+            }
         };
         
         // Set the model to the table...
@@ -120,37 +116,6 @@ public class AllRecipesGUI extends javax.swing.JFrame {
         }
             
         tableAllRecipes.setRowHeight(tableAllRecipes.getRowHeight()*2);
-        // ********************************************************************
-        /* Example for JTable - new model 
-        
-        //headers for the table
-        String[] columns = new String[] {
-            "Id", "Name", "Hourly Rate", "Part Time"
-        };
-        
-          //actual data for the table in a 2d array
-        Object[][] data = new Object[][] {
-            {1, "John", 40.0, false },
-            {2, "Rambo", 70.0, false },
-            {3, "Zorro", 60.0, true },
-        };
-        
-        final Class[] columnClass = new Class[] {
-            Integer.class, String.class, Double.class, Boolean.class
-        };
-        
-        //create table model with data
-        DefaultTableModel model = new DefaultTableModel(data, columns){
-            @Override
-            public Class<?> getColumnClass(int columnIndex)
-            {
-                return columnClass[columnIndex];
-            }
-        };
-        
-        jTable1.setModel(model);
-        // ********************************************************************
-        */
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -163,8 +128,12 @@ public class AllRecipesGUI extends javax.swing.JFrame {
         buttonSave = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableAllRecipes = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         listRemoveRecipes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -173,12 +142,15 @@ public class AllRecipesGUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(listRemoveRecipes);
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 210, 490));
+
         buttonCancel.setText("Zamknij");
         buttonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonCancelActionPerformed(evt);
             }
         });
+        jPanel1.add(buttonCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 550, 110, 35));
 
         buttonSave.setText("Zapisz");
         buttonSave.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +158,7 @@ public class AllRecipesGUI extends javax.swing.JFrame {
                 buttonSaveActionPerformed(evt);
             }
         });
+        jPanel1.add(buttonSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 550, 110, 35));
 
         tableAllRecipes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -198,31 +171,17 @@ public class AllRecipesGUI extends javax.swing.JFrame {
         tableAllRecipes.setFocusable(false);
         jScrollPane2.setViewportView(tableAllRecipes);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 404, Short.MAX_VALUE)
-                .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jScrollPane2)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 646, 490));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Lista przepisów (kliknij by usunąć)");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 20));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Wszystkie dostępne przepisy");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(224, 11, 656, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -254,9 +213,6 @@ public class AllRecipesGUI extends javax.swing.JFrame {
         for(SingleRecipe s : allRecipes){
             System.out.println(s.getName());
         }
-        
-        
-        
     }//GEN-LAST:event_listRemoveRecipesMouseClicked
 
     private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
@@ -264,7 +220,6 @@ public class AllRecipesGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonCancelActionPerformed
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-   
         RecipeIO.saveRecipeList(allRecipes);
         RecipeIO.saveRecipe(null);
         System.out.println("lista zapisana: " + allRecipes.toString());
@@ -310,6 +265,8 @@ public class AllRecipesGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonSave;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
